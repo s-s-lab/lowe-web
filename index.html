@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>LOWE｜東京都社会人ハンドボールチーム</title>
+  <meta name="description" content="LOWE（レーヴェ）は東京都で活動する社会人ハンドボールチームです。選手募集、体験参加、練習・試合予定を掲載しています。" />
+
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#top" class="brand">
+        <span class="brand-mark">L</span>
+        <span>
+          LOWE
+          <span class="brand-sub">Tokyo Handball Club</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="メニュー">
+        <a href="#about">チーム紹介</a>
+        <a href="#recruit">メンバー募集</a>
+        <a href="#records">戦績</a>
+        <a href="#schedule">スケジュール</a>
+        <a href="#contact">問い合わせ</a>
+        <a href="#admin" class="admin-link">管理画面</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top" class="container">
+    <section id="heroSection" class="hero">
+      <div class="hero-main">
+        <div>
+          <span id="heroBadge" class="badge">読み込み中...</span>
+          <h1 id="heroTitle"></h1>
+          <p id="heroLead" class="lead"></p>
+        </div>
+
+        <div class="hero-actions">
+          <a id="heroPrimaryButton" class="btn btn-primary" href="#recruit"></a>
+          <a id="heroSecondaryButton" class="btn btn-secondary" href="#schedule"></a>
+        </div>
+      </div>
+
+      <div id="heroGallery" class="hero-gallery hidden"></div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="section-head">
+        <div>
+          <h2>チーム紹介</h2>
+          <p id="aboutNote" class="section-note"></p>
+        </div>
+      </div>
+
+      <div id="aboutCards" class="grid-3"></div>
+    </section>
+
+    <section id="recruit" class="section">
+      <div class="section-head">
+        <div>
+          <h2>メンバー募集</h2>
+          <p id="recruitNote" class="section-note"></p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <span class="card-kicker">Recruit</span>
+          <h3 id="recruitTitle"></h3>
+          <ul id="recruitList" class="recruit-list"></ul>
+        </div>
+
+        <div class="form-box">
+          <h3 style="margin-top:0;">体験参加申込フォーム</h3>
+          <p class="section-note">
+            入力内容を送信すると、チーム管理者に共有されます。
+          </p>
+
+          <form id="trialForm">
+            <div class="form-grid">
+              <div class="form-row">
+                <label for="name">氏名</label>
+                <input id="name" name="name" type="text" placeholder="例：山田 太郎" required />
+              </div>
+
+              <div class="form-row">
+                <label for="age">年齢</label>
+                <input id="age" name="age" type="number" placeholder="例：28" />
+              </div>
+
+              <div class="form-row">
+                <label for="email">メールアドレス</label>
+                <input id="email" name="email" type="email" placeholder="example@example.com" required />
+              </div>
+
+              <div class="form-row">
+                <label for="position">主なポジション</label>
+                <select id="position" name="position" required>
+                  <option value="">選択してください</option>
+                  <option>GK</option>
+                  <option>LW</option>
+                  <option>RW</option>
+                  <option>PV</option>
+                  <option>CB</option>
+                  <option>LB</option>
+                  <option>RB</option>
+                  <option>複数ポジション可</option>
+                </select>
+              </div>
+
+              <div class="form-row full">
+                <label for="history">ハンドボール歴</label>
+                <input id="history" name="history" type="text" placeholder="例：高校3年、大学4年、社会人経験あり" />
+              </div>
+
+              <div class="form-row full">
+                <label for="message">質問・連絡事項</label>
+                <textarea id="message" name="message" placeholder="参加希望日、ブランク、質問など"></textarea>
+              </div>
+            </div>
+
+            <button class="btn btn-primary" type="submit">体験参加を申し込む</button>
+            <div id="formNotice" class="notice">体験参加申込を送信しました。</div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="records" class="section">
+      <div class="section-head">
+        <div>
+          <h2>戦績</h2>
+          <p class="section-note">リーグ戦・大会などの実績を一覧で掲載します。</p>
+        </div>
+      </div>
+
+      <div class="table-wrap compact-table">
+        <table>
+          <thead>
+            <tr>
+              <th>年度</th>
+              <th>大会・リーグ</th>
+              <th>結果</th>
+              <th>備考</th>
+            </tr>
+          </thead>
+          <tbody id="recordList"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="schedule" class="section">
+      <div class="section-head">
+        <div>
+          <h2>スケジュール</h2>
+          <p class="section-note">体験参加希望者向けに、直近の練習・試合予定を掲載します。</p>
+        </div>
+      </div>
+
+      <div id="scheduleList" class="schedule-list"></div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="section-head">
+        <div>
+          <h2>問い合わせ</h2>
+          <p class="section-note">体験参加、練習試合、その他連絡を受け付けます。</p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <article class="card">
+          <span class="card-kicker">Trial</span>
+          <h3>体験参加</h3>
+          <p>練習参加を希望する方は、メンバー募集ページのフォームからご連絡ください。</p>
+        </article>
+
+        <article class="card">
+          <span class="card-kicker">Match</span>
+          <h3>練習試合の相談</h3>
+          <p>練習試合のお誘いや合同練習の相談も受け付けています。</p>
+        </article>
+
+        <article class="card">
+          <span class="card-kicker">Team</span>
+          <h3>チーム関係者連絡</h3>
+          <p>大会、体育館利用、チーム運営に関する連絡窓口としても活用できます。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="admin" class="section">
+      <div class="section-head">
+        <div>
+          <h2>管理画面</h2>
+          <p class="section-note">タブを切り替えて各コンテンツを編集できます。</p>
+        </div>
+      </div>
+
+      <div class="admin-box">
+        <div class="admin-note">
+          管理キーを入力してから保存してください。管理キーはWebサイトのコードには保存されません。
+        </div>
+
+        <div class="admin-key-row">
+          <div>
+            <label for="adminKeyInput">管理キー</label>
+            <input id="adminKeyInput" type="password" placeholder="管理キーを入力" />
+          </div>
+          <button id="saveAdminKey" class="btn btn-secondary" type="button">この端末に保存</button>
+        </div>
+
+        <div class="admin-tabs" role="tablist">
+          <button class="tab-btn active" type="button" data-tab="tabTop">トップページ</button>
+          <button class="tab-btn" type="button" data-tab="tabAbout">チーム紹介</button>
+          <button class="tab-btn" type="button" data-tab="tabRecruit">メンバー募集</button>
+          <button class="tab-btn" type="button" data-tab="tabRecords">戦績</button>
+          <button class="tab-btn" type="button" data-tab="tabSchedule">スケジュール</button>
+        </div>
+
+        <div id="tabTop" class="tab-panel active">
+          <form id="topForm">
+            <h3 style="margin-top:0;">トップページ編集</h3>
+
+            <div class="form-grid">
+              <div class="form-row full">
+                <label for="editBadge">募集バッジ</label>
+                <input id="editBadge" type="text" />
+              </div>
+
+              <div class="form-row full">
+                <label for="editTitle">メイン見出し</label>
+                <textarea id="editTitle"></textarea>
+              </div>
+
+              <div class="form-row full">
+                <label for="editLead">説明文</label>
+                <textarea id="editLead"></textarea>
+              </div>
+
+              <div class="form-row">
+                <label for="editPrimaryText">メインボタン文言</label>
+                <input id="editPrimaryText" type="text" />
+              </div>
+
+              <div class="form-row">
+                <label for="editPrimaryLink">メインボタンリンク</label>
+                <input id="editPrimaryLink" type="text" />
+              </div>
+
+              <div class="form-row">
+                <label for="editSecondaryText">サブボタン文言</label>
+                <input id="editSecondaryText" type="text" />
+              </div>
+
+              <div class="form-row">
+                <label for="editSecondaryLink">サブボタンリンク</label>
+                <input id="editSecondaryLink" type="text" />
+              </div>
+
+              <div class="form-row full">
+                <label for="editImage1">トップ画像1 URL</label>
+                <input id="editImage1" type="url" placeholder="https://..." />
+              </div>
+
+              <div class="form-row full">
+                <label for="editImage2">トップ画像2 URL</label>
+                <input id="editImage2" type="url" placeholder="https://..." />
+              </div>
+
+              <div class="form-row full">
+                <label for="editImage3">トップ画像3 URL</label>
+                <input id="editImage3" type="url" placeholder="https://..." />
+              </div>
+            </div>
+
+            <div class="admin-actions">
+              <button class="btn btn-primary" type="submit">トップページを保存する</button>
+            </div>
+
+            <div id="topNotice" class="notice">トップページを更新しました。</div>
+          </form>
+        </div>
+
+        <div id="tabAbout" class="tab-panel">
+          <form id="aboutForm">
+            <h3 style="margin-top:0;">チーム紹介編集</h3>
+
+            <div class="form-row full">
+              <label for="editAboutNote">チーム紹介の補足文</label>
+              <input id="editAboutNote" type="text" />
+            </div>
+
+            <div id="aboutEditArea"></div>
+
+            <div class="admin-actions">
+              <button class="btn btn-primary" type="submit">チーム紹介を保存する</button>
+            </div>
+
+            <div id="aboutNotice" class="notice">チーム紹介を更新しました。</div>
+          </form>
+        </div>
+
+        <div id="tabRecruit" class="tab-panel">
+          <form id="recruitForm">
+            <h3 style="margin-top:0;">メンバー募集編集</h3>
+
+            <div class="form-row full">
+              <label for="editRecruitNote">メンバー募集の補足文</label>
+              <input id="editRecruitNote" type="text" />
+            </div>
+
+            <div class="form-row full">
+              <label for="editRecruitTitle">募集欄の見出し</label>
+              <input id="editRecruitTitle" type="text" />
+            </div>
+
+            <div id="recruitEditArea"></div>
+
+            <div class="admin-actions">
+              <button class="btn btn-primary" type="submit">メンバー募集を保存する</button>
+            </div>
+
+            <div id="recruitNotice" class="notice">メンバー募集を更新しました。</div>
+          </form>
+        </div>
+
+        <div id="tabRecords" class="tab-panel">
+          <h3 style="margin-top:0;">戦績登録・更新</h3>
+
+          <form id="recordForm">
+            <input id="recordId" type="hidden" />
+
+            <div class="form-grid">
+              <div class="form-row">
+                <label for="recordSeason">年度・シーズン</label>
+                <input id="recordSeason" type="text" placeholder="例：2026 Season" required />
+              </div>
+
+              <div class="form-row">
+                <label for="recordCompetition">大会・リーグ名</label>
+                <input id="recordCompetition" type="text" placeholder="例：東京都社会人リーグ" required />
+              </div>
+
+              <div class="form-row full">
+                <label for="recordResult">結果</label>
+                <input id="recordResult" type="text" placeholder="例：2部リーグ 3位" />
+              </div>
+
+              <div class="form-row full">
+                <label for="recordNote">備考</label>
+                <textarea id="recordNote" placeholder="例：新体制でリーグ戦に参加。"></textarea>
+              </div>
+            </div>
+
+            <div class="admin-actions">
+              <button class="btn btn-primary" type="submit">登録・更新する</button>
+              <button id="clearRecordForm" class="btn btn-secondary" type="button">入力をクリア</button>
+            </div>
+
+            <div id="recordNotice" class="notice">戦績を更新しました。</div>
+          </form>
+
+          <div style="height:16px;"></div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>年度</th>
+                  <th>大会・リーグ</th>
+                  <th>結果</th>
+                  <th>備考</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="recordAdminTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="tabSchedule" class="tab-panel">
+          <h3 style="margin-top:0;">スケジュール登録・更新</h3>
+
+          <form id="scheduleForm">
+            <input id="scheduleId" type="hidden" />
+
+            <div class="form-grid">
+              <div class="form-row">
+                <label for="scheduleDate">日付</label>
+                <input id="scheduleDate" type="date" required />
+              </div>
+
+              <div class="form-row">
+                <label for="scheduleType">種別</label>
+                <select id="scheduleType">
+                  <option>練習</option>
+                  <option>練習試合</option>
+                  <option>公式戦</option>
+                  <option>イベント</option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <label for="scheduleStartTime">開始時間</label>
+                <input id="scheduleStartTime" type="time" />
+              </div>
+
+              <div class="form-row">
+                <label for="scheduleEndTime">終了時間</label>
+                <input id="scheduleEndTime" type="time" />
+              </div>
+
+              <div class="form-row">
+                <label for="scheduleTitleInput">内容</label>
+                <input id="scheduleTitleInput" type="text" placeholder="例：通常練習" required />
+              </div>
+
+              <div class="form-row">
+                <label for="schedulePlace">場所</label>
+                <input id="schedulePlace" type="text" placeholder="例：東京都内体育館" />
+              </div>
+
+              <div class="form-row">
+                <label for="scheduleTrialStatus">体験参加</label>
+                <select id="scheduleTrialStatus">
+                  <option>可</option>
+                  <option>要相談</option>
+                  <option>不可</option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <label for="scheduleNote">公開メモ</label>
+                <input id="scheduleNote" type="text" placeholder="例：詳細は申込後に案内します" />
+              </div>
+            </div>
+
+            <div class="admin-actions">
+              <button class="btn btn-primary" type="submit">登録・更新する</button>
+              <button id="clearScheduleForm" class="btn btn-secondary" type="button">入力をクリア</button>
+            </div>
+
+            <div id="scheduleNotice" class="notice">スケジュールを更新しました。</div>
+          </form>
+
+          <div style="height:16px;"></div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>日付</th>
+                  <th>内容</th>
+                  <th>時間</th>
+                  <th>場所</th>
+                  <th>種別</th>
+                  <th>体験参加</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="scheduleAdminTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      © LOWE Tokyo Handball Club.
+    </footer>
+  </main>
+
+  <script>
+    window.LOWE_CONFIG = {
+      // ここにGASウェブアプリURLを貼り付けてください。
+      // 例: https://script.google.com/macros/s/XXXXXXXXXXXXXXXXXXXXXXXX/exec
+      API_URL: 'PASTE_YOUR_GAS_WEB_APP_URL_HERE'
+    };
+  </script>
+  <script src="./app.js"></script>
+</body>
+</html>
