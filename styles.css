@@ -82,6 +82,10 @@ a { color: inherit; text-decoration: none; }
 }
 .nav a:hover { background: var(--surface-soft); color: var(--text); }
 .nav .admin-link { background: var(--main); color: #ffffff; }
+.nav a.active {
+  background: var(--main);
+  color: #ffffff;
+}
 
 .container {
   max-width: 1120px;
