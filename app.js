@@ -144,9 +144,49 @@ function bindEvents() {
     catch (err) { showNotice('contactNotice', err.message, true); }
   });
 }
+
+function setupActiveNav() {
+  const navLinks = Array.from(document.querySelectorAll('.nav a[href^="#"]'));
+
+  if (navLinks.length === 0) return;
+
+  const sections = navLinks
+    .map(link => {
+      const id = link.getAttribute('href');
+      const section = document.querySelector(id);
+      return { link, section };
+    })
+    .filter(item => item.section);
+
+  function updateActiveNav() {
+    let current = sections[0];
+
+    sections.forEach(item => {
+      const rect = item.section.getBoundingClientRect();
+
+      if (rect.top <= 120) {
+        current = item;
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+    });
+
+    if (current && current.link) {
+      current.link.classList.add('active');
+    }
+  }
+
+  window.addEventListener('scroll', updateActiveNav);
+  window.addEventListener('resize', updateActiveNav);
+  updateActiveNav();
+}
+
 async function init() {
   bindEvents();
   try { state.data = await apiGetData(); } catch (err) { console.error(err); }
   renderAll();
+  setupActiveNav();
 }
 init();
