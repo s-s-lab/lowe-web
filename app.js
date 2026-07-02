@@ -161,26 +161,26 @@ function setupActiveNav() {
   function updateActiveNav() {
     if (sections.length === 0) return;
 
+    const triggerLine = Math.min(window.innerHeight * 0.62, 340);
+    let current = sections[0];
+
+    // 下から順番に見て、見出しが画面内に入っている最後のセクションを選ぶ。
+    // これにより、問い合わせ見出しが見えた時点で問い合わせタブが黒くなる。
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const rect = sections[i].section.getBoundingClientRect();
+
+      if (rect.top <= triggerLine) {
+        current = sections[i];
+        break;
+      }
+    }
+
+    // ページ最下部では必ず最後のセクションを選択
     const scrollBottom = window.innerHeight + window.scrollY;
     const documentHeight = document.documentElement.scrollHeight;
 
-    let current = sections[0];
-
-    // ページ最下部付近では、最後のセクション（問い合わせ）を確実に選択状態にする
     if (documentHeight - scrollBottom <= 8) {
       current = sections[sections.length - 1];
-    } else {
-      let nearestDistance = Number.POSITIVE_INFINITY;
-
-      sections.forEach(item => {
-        const rect = item.section.getBoundingClientRect();
-        const distance = Math.abs(rect.top - 110);
-
-        if (rect.top <= window.innerHeight * 0.45 && distance < nearestDistance) {
-          nearestDistance = distance;
-          current = item;
-        }
-      });
     }
 
     navLinks.forEach(link => {

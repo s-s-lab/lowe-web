@@ -76,7 +76,26 @@ function editSchedule(id) { const e=(state.data.schedules||[]).find(x=>x.id===id
 function activateTab(tabId) { document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tabId)); document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active', p.id===tabId)); }
 
 function bindEvents() {
-  adminLoginForm.addEventListener('submit', async e=>{ e.preventDefault(); state.adminKey=adminKeyInput.value.trim(); try{ await apiPost('checkAdmin'); adminLogin.classList.add('hidden'); adminApp.classList.remove('hidden'); await reloadData(); } catch(err){ state.adminKey=''; const msg = err.message === 'Unknown action.' ? 'GASのデプロイが古い可能性があります。Code.gsを上書き後、デプロイを新しいバージョンで更新してください。' : err.message; showNotice('loginNotice', msg, true); } });
+  adminLoginForm.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    state.adminKey = adminKeyInput.value.trim();
+
+    if (!state.adminKey) {
+      showNotice('loginNotice', '管理者キーを入力してください。', true);
+      return;
+    }
+
+    try {
+      // ログイン時点ではGASのcheckAdminを呼ばず、管理画面を開きます。
+      // 管理者キーの正否は、保存・削除時にGAS側で判定されます。
+      adminLogin.classList.add('hidden');
+      adminApp.classList.remove('hidden');
+      await reloadData();
+    } catch (err) {
+      showNotice('loginNotice', err.message, true);
+    }
+  });
   document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>activateTab(b.dataset.tab)));
   topForm.addEventListener('submit', async e=>{ e.preventDefault(); try{ await apiPost('saveTop',{top:getTopFormValue()}); await reloadData(); showNotice('topNotice','トップページを更新しました。'); }catch(err){ showNotice('topNotice',err.message,true); } });
   aboutForm.addEventListener('submit', async e=>{ e.preventDefault(); try{ await apiPost('saveAbout',{about:getAboutFormValue()}); await reloadData(); showNotice('aboutNotice','チーム紹介を更新しました。'); }catch(err){ showNotice('aboutNotice',err.message,true); } });

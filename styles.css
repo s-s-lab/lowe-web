@@ -67,6 +67,12 @@ a { color: inherit; text-decoration: none; }
   object-fit: cover;
   display: block;
 }
+
+.brand-mark.logo-fallback::before {
+  content: "L";
+  font-size: 22px;
+  font-weight: 900;
+}
 .brand-sub {
   display: block;
   font-size: 11px;
