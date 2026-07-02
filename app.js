@@ -159,15 +159,29 @@ function setupActiveNav() {
     .filter(item => item.section);
 
   function updateActiveNav() {
+    if (sections.length === 0) return;
+
+    const scrollBottom = window.innerHeight + window.scrollY;
+    const documentHeight = document.documentElement.scrollHeight;
+
     let current = sections[0];
 
-    sections.forEach(item => {
-      const rect = item.section.getBoundingClientRect();
+    // ページ最下部付近では、最後のセクション（問い合わせ）を確実に選択状態にする
+    if (documentHeight - scrollBottom <= 8) {
+      current = sections[sections.length - 1];
+    } else {
+      let nearestDistance = Number.POSITIVE_INFINITY;
 
-      if (rect.top <= 120) {
-        current = item;
-      }
-    });
+      sections.forEach(item => {
+        const rect = item.section.getBoundingClientRect();
+        const distance = Math.abs(rect.top - 110);
+
+        if (rect.top <= window.innerHeight * 0.45 && distance < nearestDistance) {
+          nearestDistance = distance;
+          current = item;
+        }
+      });
+    }
 
     navLinks.forEach(link => {
       link.classList.remove('active');
@@ -178,9 +192,9 @@ function setupActiveNav() {
     }
   }
 
-  window.addEventListener('scroll', updateActiveNav);
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
   window.addEventListener('resize', updateActiveNav);
-  updateActiveNav();
+  setTimeout(updateActiveNav, 0);
 }
 
 async function init() {

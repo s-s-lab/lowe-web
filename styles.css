@@ -50,15 +50,22 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.04em;
 }
 .brand-mark {
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
   border-radius: 12px;
   background: var(--main);
   color: var(--accent);
   display: grid;
   place-items: center;
-  font-size: 22px;
-  font-weight: 900;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+
+.brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .brand-sub {
   display: block;
